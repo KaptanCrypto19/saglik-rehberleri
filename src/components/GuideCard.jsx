@@ -121,33 +121,31 @@ export default function GuideCard({
     return (
         <div className="guide-card">
             <div className="guide-qr">
-                <QRCode text={guide.url} size={120} />
+                <QRCode text={guide.url} size={80} />
             </div>
 
             <div className="guide-content">
                 <div className="guide-header">
                     <h3 className="guide-title">{guide.titleShort}</h3>
-                    <div className="guide-badges">
-                        <span className="badge badge-language">{guide.languageLabel}</span>
-                    </div>
+                    <span className="badge badge-language">{guide.languageLabel}</span>
                 </div>
 
                 <p className="guide-description">{guide.title}</p>
 
                 <div className="guide-actions">
                     <button className="btn btn-success" onClick={handleViewPDF}>
-                        📄 PDF Görüntüle
+                        📄 PDF
                     </button>
 
                     <button className="btn btn-primary" onClick={handleDownloadQR}>
-                        ⬇️ QR İndir
+                        ⬇️ QR
                     </button>
 
                     <button
                         className="btn btn-outline"
                         onClick={handleCopyLink}
                     >
-                        {copied ? '✅ Kopyalandı!' : '📋 Link Kopyala'}
+                        {copied ? '✅' : '📋'}
                     </button>
 
                     <div style={{ position: 'relative' }}>
@@ -155,42 +153,29 @@ export default function GuideCard({
                             className="btn btn-outline"
                             onClick={() => setShowPrintOptions(!showPrintOptions)}
                         >
-                            🖨️ Yazdır
+                            🖨️
                         </button>
 
                         {showPrintOptions && (
-                            <div style={{
-                                position: 'absolute',
-                                top: '100%',
-                                left: 0,
-                                marginTop: '4px',
-                                background: 'var(--color-bg-card)',
-                                border: '1px solid var(--color-border)',
-                                borderRadius: 'var(--radius-md)',
-                                boxShadow: 'var(--shadow-lg)',
-                                zIndex: 10,
-                                minWidth: '160px'
-                            }}>
+                            <div className="print-dropdown">
                                 <button
                                     className="btn btn-ghost"
-                                    style={{ width: '100%', justifyContent: 'flex-start' }}
                                     onClick={() => handlePrint('single')}
                                 >
                                     📄 Tek Sayfa
                                 </button>
                                 <button
                                     className="btn btn-ghost"
-                                    style={{ width: '100%', justifyContent: 'flex-start' }}
                                     onClick={() => handlePrint('poster')}
                                 >
-                                    🖼️ Poster (A3)
+                                    🖼️ Poster
                                 </button>
                             </div>
                         )}
                     </div>
 
                     <button
-                        className={`btn btn-ghost btn-icon ${isFavorite ? 'active' : ''}`}
+                        className={`btn btn-ghost ${isFavorite ? 'active' : ''}`}
                         onClick={() => onToggleFavorite(guide.id)}
                         title={isFavorite ? 'Favorilerden çıkar' : 'Favorilere ekle'}
                     >

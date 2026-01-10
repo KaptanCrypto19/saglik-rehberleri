@@ -6,19 +6,12 @@ export default function Header() {
     return (
         <header className="header">
             <div className="container header-content">
-                <a href="/" className="header-logo">
-                    <img
-                        src="https://www.saglik.gov.tr/images/logo.png"
-                        alt="T.C. Sağlık Bakanlığı"
-                        onError={(e) => {
-                            e.target.style.display = 'none';
-                        }}
-                    />
-                    <div className="header-title">
-                        <h1>Sağlık Rehberleri</h1>
-                        <span>T.C. Sağlık Bakanlığı</span>
-                    </div>
-                </a>
+                <div className="header-brand">
+                    <h1 className="header-title">
+                        🏥 Sağlık Rehberleri
+                    </h1>
+                    <span className="header-tagline">QR kod ile kolay erişim • T.C. Sağlık Bakanlığı</span>
+                </div>
 
                 <div className="header-actions">
                     <button
