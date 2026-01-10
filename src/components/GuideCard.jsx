@@ -1,20 +1,17 @@
 import { useState } from 'react';
 import QRCode, { downloadQRCode } from './QRCode';
-import { trackView } from '../lib/supabase';
 
 export default function GuideCard({
     guide,
     isFavorite,
     onToggleFavorite,
-    onView,
-    viewCount
+    onView
 }) {
     const [copied, setCopied] = useState(false);
     const [showPrintOptions, setShowPrintOptions] = useState(false);
 
     const handleViewPDF = () => {
         onView(guide.id);
-        trackView(guide.id);
         window.open(guide.url, '_blank');
     };
 
@@ -136,12 +133,6 @@ export default function GuideCard({
                 </div>
 
                 <p className="guide-description">{guide.title}</p>
-
-                {viewCount > 0 && (
-                    <p className="guide-stats">
-                        👁️ {viewCount} görüntülenme
-                    </p>
-                )}
 
                 <div className="guide-actions">
                     <button className="btn btn-success" onClick={handleViewPDF}>

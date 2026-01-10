@@ -1,8 +1,7 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { guides, categories } from '../data/guides';
 import { useFavorites } from '../hooks/useFavorites';
 import { useRecentViews } from '../hooks/useRecentViews';
-import { getViewCounts } from '../lib/supabase';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import SearchBar from '../components/SearchBar';
@@ -14,15 +13,9 @@ export default function Home() {
     const [selectedSubcategory, setSelectedSubcategory] = useState('all');
     const [selectedLanguage, setSelectedLanguage] = useState('all');
     const [showFavorites, setShowFavorites] = useState(false);
-    const [viewCounts, setViewCounts] = useState({});
 
     const { favorites, toggleFavorite, isFavorite } = useFavorites();
     const { recentViews, addRecentView } = useRecentViews();
-
-    // Load view counts from Supabase
-    useEffect(() => {
-        getViewCounts().then(setViewCounts);
-    }, []);
 
     // Filter guides
     const filteredGuides = useMemo(() => {
@@ -55,9 +48,6 @@ export default function Home() {
             .slice(0, 5);
     }, [recentViews]);
 
-    // Stats
-    const totalViews = Object.values(viewCounts).reduce((a, b) => a + b, 0);
-
     return (
         <>
             <Header />
@@ -76,10 +66,6 @@ export default function Home() {
                             <div className="hero-stat">
                                 <div className="hero-stat-value">{categories.length}</div>
                                 <div className="hero-stat-label">Kategori</div>
-                            </div>
-                            <div className="hero-stat">
-                                <div className="hero-stat-value">{totalViews}</div>
-                                <div className="hero-stat-label">Görüntülenme</div>
                             </div>
                         </div>
                     </section>
@@ -145,7 +131,6 @@ export default function Home() {
                                     isFavorite={isFavorite(guide.id)}
                                     onToggleFavorite={toggleFavorite}
                                     onView={addRecentView}
-                                    viewCount={viewCounts[guide.id] || 0}
                                 />
                             ))
                         )}
